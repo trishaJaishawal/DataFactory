@@ -1,0 +1,127 @@
+{
+	"name": "pipelineParameterized",
+	"properties": {
+		"activities": [
+			{
+				"name": "CopyTables",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "AzureSqlTableParameterized",
+						"type": "DatasetReference",
+						"parameters": {
+							"SchemaName": {
+								"value": "@pipeline().parameters.TableName",
+								"type": "Expression"
+							},
+							"TableName": {
+								"value": "@pipeline().parameters.TableName",
+								"type": "Expression"
+							},
+							"ServerName": {
+								"value": "@pipeline().parameters.ServerName",
+								"type": "Expression"
+							},
+							"DbName": {
+								"value": "@pipeline().parameters.Dbname",
+								"type": "Expression"
+							},
+							"username": {
+								"value": "@pipeline().parameters.username",
+								"type": "Expression"
+							},
+							"password": {
+								"value": "@pipeline().parameters.password",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "AzureSqlTableParameterized",
+						"type": "DatasetReference",
+						"parameters": {
+							"SchemaName": {
+								"value": "@pipeline().parameters.schemaName",
+								"type": "Expression"
+							},
+							"TableName": {
+								"value": "@pipeline().parameters.TableNameDestination",
+								"type": "Expression"
+							},
+							"ServerName": {
+								"value": "@pipeline().parameters.ServerName",
+								"type": "Expression"
+							},
+							"DbName": {
+								"value": "@pipeline().parameters.Dbname",
+								"type": "Expression"
+							},
+							"username": {
+								"value": "@pipeline().parameters.username",
+								"type": "Expression"
+							},
+							"password": {
+								"value": "@pipeline().parameters.password",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"ServerName": {
+				"type": "string"
+			},
+			"Dbname": {
+				"type": "string"
+			},
+			"username": {
+				"type": "string"
+			},
+			"password": {
+				"type": "string"
+			},
+			"schemaName": {
+				"type": "string"
+			},
+			"TableName": {
+				"type": "string"
+			},
+			"TableNameDestination": {
+				"type": "string"
+			}
+		},
+		"annotations": []
+	}
+}
