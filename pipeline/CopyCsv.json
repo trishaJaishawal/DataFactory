@@ -93,11 +93,22 @@
 				"outputs": [
 					{
 						"referenceName": "OutputDataSet",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"FileName": {
+								"value": "@pipeline().parameters.Filename",
+								"type": "Expression"
+							}
+						}
 					}
 				]
 			}
 		],
+		"parameters": {
+			"Filename": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
