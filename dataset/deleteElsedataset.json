@@ -1,5 +1,5 @@
 {
-	"name": "DeleteDataset",
+	"name": "deleteElsedataset",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_blob",
@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "714a6402-142e-4b0c-9fd5-c3b5734d85b8",
+				"fileName": "dbo_ProductCategory.csv",
 				"container": "trisha"
 			}
 		}
