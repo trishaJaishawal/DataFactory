@@ -40,11 +40,6 @@
 				}
 			}
 		],
-		"parameters": {
-			"LoggingFolderName": {
-				"type": "string"
-			}
-		},
 		"annotations": []
 	}
 }
