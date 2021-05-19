@@ -85,9 +85,6 @@
 		"parameters": {
 			"FolderName": {
 				"type": "array"
-			},
-			"outputFileName": {
-				"type": "string"
 			}
 		},
 		"annotations": []
