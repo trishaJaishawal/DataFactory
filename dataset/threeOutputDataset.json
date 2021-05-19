@@ -10,6 +10,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"folderPath": {
+					"value": "item()",
+					"type": "Expression"
+				},
 				"container": "trisha"
 			},
 			"columnDelimiter": ",",
