@@ -1,0 +1,36 @@
+{
+	"name": "AppendVariablesActivity",
+	"properties": {
+		"activities": [
+			{
+				"name": "AppendVariables",
+				"type": "AppendVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "ListOfFileNames",
+					"value": {
+						"value": "@pipeline().parameters.FileName",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"FileName": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"ListOfFileNames": {
+				"type": "Array",
+				"defaultValue": [
+					"abc.csv",
+					"tyh.csv",
+					"fef.csv"
+				]
+			}
+		},
+		"annotations": []
+	}
+}
