@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Delete1",
+				"name": "DeleteActivity",
 				"type": "Delete",
 				"dependsOn": [],
 				"policy": {
@@ -13,12 +13,38 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [],
+				"userProperties": [
+					{
+						"name": "LogFiles",
+						"value": "all files deleted from blob storage"
+					}
+				],
 				"typeProperties": {
-					"enableLogging": true
+					"dataset": {
+						"referenceName": "DeleteDataset",
+						"type": "DatasetReference"
+					},
+					"logStorageSettings": {
+						"linkedServiceName": {
+							"referenceName": "ls_blob",
+							"type": "LinkedServiceReference"
+						},
+						"path": "trisha"
+					},
+					"enableLogging": true,
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					}
 				}
 			}
 		],
+		"parameters": {
+			"LoggingFolderName": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
