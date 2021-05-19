@@ -84,6 +84,13 @@
 									"referenceName": "DeleteDataset",
 									"type": "DatasetReference"
 								},
+								"logStorageSettings": {
+									"linkedServiceName": {
+										"referenceName": "ls_blob",
+										"type": "LinkedServiceReference"
+									},
+									"path": "trisha"
+								},
 								"enableLogging": true,
 								"storeSettings": {
 									"type": "AzureBlobStorageReadSettings",
