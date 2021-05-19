@@ -12,6 +12,7 @@
 						"value": "@pipeline().parameters.FolderName",
 						"type": "Expression"
 					},
+					"isSequential": true,
 					"activities": [
 						{
 							"name": "Copy data",
@@ -67,7 +68,13 @@
 							"outputs": [
 								{
 									"referenceName": "threeOutputDataset",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"FolderName": {
+											"value": "@item()",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
@@ -78,6 +85,9 @@
 		"parameters": {
 			"FolderName": {
 				"type": "array"
+			},
+			"outputFileName": {
+				"type": "string"
 			}
 		},
 		"annotations": []

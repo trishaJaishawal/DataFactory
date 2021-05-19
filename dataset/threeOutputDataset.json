@@ -5,13 +5,18 @@
 			"referenceName": "ls_blob",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"FolderName": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"folderPath": {
-					"value": "item()",
+					"value": "@dataset().FolderName",
 					"type": "Expression"
 				},
 				"container": "trisha"
