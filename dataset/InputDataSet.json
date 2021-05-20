@@ -2,7 +2,7 @@
 	"name": "InputDataSet",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "ls_blob",
+			"referenceName": "AzureBlobStorageLS",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
