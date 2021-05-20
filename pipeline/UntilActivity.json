@@ -27,7 +27,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@equals(activity('Get Metadata').output,true)",
+									"value": "@equals(activity('Get Metadata').output.exists,true)",
 									"type": "Expression"
 								},
 								"ifFalseActivities": [
