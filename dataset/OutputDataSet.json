@@ -2,7 +2,7 @@
 	"name": "OutputDataSet",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "ls_blob",
+			"referenceName": "AzureBlobStorageLS",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
