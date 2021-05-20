@@ -95,7 +95,7 @@
 						"referenceName": "OutputDataSet",
 						"type": "DatasetReference",
 						"parameters": {
-							"FileName": {
+							"FolderName": {
 								"value": "@pipeline().parameters.Filename",
 								"type": "Expression"
 							}

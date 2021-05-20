@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"FileName": {
+			"FolderName": {
 				"type": "string"
 			}
 		},
@@ -15,11 +15,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": {
-					"value": "@dataset().FileName",
+				"folderPath": {
+					"value": "@dataset().FolderName",
 					"type": "Expression"
 				},
-				"folderPath": "output",
 				"container": "trisha"
 			},
 			"columnDelimiter": ",",
