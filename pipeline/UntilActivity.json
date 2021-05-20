@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Until1",
+				"name": "UntilTrue",
 				"type": "Until",
 				"dependsOn": [],
 				"userProperties": [],
