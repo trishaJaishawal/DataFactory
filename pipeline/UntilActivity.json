@@ -16,11 +16,18 @@
 						{
 							"name": "If Condition1",
 							"type": "IfCondition",
-							"dependsOn": [],
+							"dependsOn": [
+								{
+									"activity": "Get Metadata",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@bool(variables('loopVariable'))",
+									"value": "@equals(activity('Get Metadata').output,true)",
 									"type": "Expression"
 								},
 								"ifFalseActivities": [
@@ -36,45 +43,9 @@
 								],
 								"ifTrueActivities": [
 									{
-										"name": "Get Metadata",
-										"type": "GetMetadata",
-										"dependsOn": [],
-										"policy": {
-											"timeout": "7.00:00:00",
-											"retry": 0,
-											"retryIntervalInSeconds": 30,
-											"secureOutput": false,
-											"secureInput": false
-										},
-										"userProperties": [],
-										"typeProperties": {
-											"dataset": {
-												"referenceName": "FileExistsDataSet",
-												"type": "DatasetReference"
-											},
-											"fieldList": [
-												"exists"
-											],
-											"storeSettings": {
-												"type": "AzureBlobStorageReadSettings",
-												"enablePartitionDiscovery": false
-											},
-											"formatSettings": {
-												"type": "DelimitedTextReadSettings"
-											}
-										}
-									},
-									{
 										"name": "Set variable",
 										"type": "SetVariable",
-										"dependsOn": [
-											{
-												"activity": "Get Metadata",
-												"dependencyConditions": [
-													"Succeeded"
-												]
-											}
-										],
+										"dependsOn": [],
 										"userProperties": [],
 										"typeProperties": {
 											"variableName": "loopVariable",
@@ -82,6 +53,35 @@
 										}
 									}
 								]
+							}
+						},
+						{
+							"name": "Get Metadata",
+							"type": "GetMetadata",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataset": {
+									"referenceName": "FileExistsDataSet",
+									"type": "DatasetReference"
+								},
+								"fieldList": [
+									"exists"
+								],
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
 							}
 						}
 					],
@@ -91,7 +91,8 @@
 		],
 		"variables": {
 			"loopVariable": {
-				"type": "Boolean"
+				"type": "Boolean",
+				"defaultValue": false
 			}
 		},
 		"annotations": []
