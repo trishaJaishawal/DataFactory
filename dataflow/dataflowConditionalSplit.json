@@ -1,0 +1,53 @@
+{
+	"name": "dataflowConditionalSplit",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "empData",
+						"type": "DatasetReference"
+					},
+					"name": "empData"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "physDS",
+						"type": "DatasetReference"
+					},
+					"name": "sinkphys"
+				},
+				{
+					"dataset": {
+						"referenceName": "physDS",
+						"type": "DatasetReference"
+					},
+					"name": "mathssink"
+				},
+				{
+					"dataset": {
+						"referenceName": "physDS",
+						"type": "DatasetReference"
+					},
+					"name": "sinkDs"
+				},
+				{
+					"dataset": {
+						"referenceName": "physDS",
+						"type": "DatasetReference"
+					},
+					"name": "sinkOthers"
+				}
+			],
+			"transformations": [
+				{
+					"name": "DeptPhysics"
+				}
+			],
+			"script": "source(output(\n\t\tempid as string,\n\t\tempName as string,\n\t\tage as string,\n\t\tDeptid as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> empData\nempData split(equals(Deptid, '100'),\n\tequals(Deptid, '200'),\n\tequals(Deptid, '300'),\n\tdisjoint: false) ~> DeptPhysics@(Physics, Maths, DS, others)\nDeptPhysics@Physics sink(input(\n\t\t{emp_name$$|$month$|incentive$$} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['Physics.csv'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sinkphys\nDeptPhysics@Maths sink(input(\n\t\t{emp_name$$|$month$|incentive$$} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['maths.csv'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> mathssink\nDeptPhysics@DS sink(input(\n\t\t{emp_name$$|$month$|incentive$$} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['DS.csv'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sinkDs\nDeptPhysics@others sink(input(\n\t\t{emp_name$$|$month$|incentive$$} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['others.csv'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sinkOthers"
+		}
+	}
+}
