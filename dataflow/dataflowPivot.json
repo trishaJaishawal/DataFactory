@@ -26,7 +26,7 @@
 					"name": "Pivot"
 				}
 			],
-			"script": "source(output(\n\t\tempid as string,\n\t\tempName as string,\n\t\tage as string,\n\t\tDeptid as string,\n\t\tCountryName as string,\n\t\tgender as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> dataemp\ndataemp pivot(groupBy(Deptid),\n\tpivotBy(gender),\n\ttotalcount = count(empid),\n\tcolumnNaming: '$N$V',\n\tlateral: true) ~> Pivot\nPivot sink(input(\n\t\tDeptid as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['pivotgenderCount.csv'],\n\tmapColumn(\n\t\tDeptid\n\t),\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink"
+			"script": "source(output(\n\t\tempid as string,\n\t\tempName as string,\n\t\tage as string,\n\t\tDeptid as string,\n\t\tCountryName as string,\n\t\tgender as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> dataemp\ndataemp pivot(groupBy(Deptid),\n\tpivotBy(gender),\n\t{} = count(empid),\n\tcolumnNaming: 'Total_$N$V_Count',\n\tlateral: true) ~> Pivot\nPivot sink(input(\n\t\tDeptid as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['pivotgenderCount.csv'],\n\tmapColumn(\n\t\tDeptid\n\t),\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink"
 		}
 	}
 }
