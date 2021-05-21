@@ -1,0 +1,39 @@
+{
+	"name": "dataflowExistsAndNotExists",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "empData",
+						"type": "DatasetReference"
+					},
+					"name": "empData"
+				},
+				{
+					"dataset": {
+						"referenceName": "DeptData",
+						"type": "DatasetReference"
+					},
+					"name": "deptData"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "outputDataSetEmpDept",
+						"type": "DatasetReference"
+					},
+					"name": "sink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Exists"
+				}
+			],
+			"script": "source(output(\n\t\tempid as string,\n\t\tempName as string,\n\t\tage as string,\n\t\tDeptid as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> empData\nsource(output(\n\t\tdeptid as string,\n\t\tdeptname as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> deptData\nempData, deptData exists(empData@Deptid == deptData@deptid,\n\tnegate:false,\n\tbroadcast: 'auto')~> Exists\nExists sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['DeptExists.csv'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink"
+		}
+	}
+}
