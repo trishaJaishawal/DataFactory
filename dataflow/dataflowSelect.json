@@ -1,0 +1,24 @@
+{
+	"name": "dataflowSelect",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "empData",
+						"type": "DatasetReference"
+					},
+					"name": "empdata"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "Select"
+				}
+			],
+			"script": "source(output(\n\t\tempid as string,\n\t\tempName as string,\n\t\tage as string,\n\t\tDeptid as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> empdata\nempdata select(mapColumn(\n\t\tEmpid = empid,\n\t\tEmpName = empName,\n\t\tAge = age\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select"
+		}
+	}
+}
