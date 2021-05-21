@@ -1,5 +1,5 @@
 {
-	"name": "physDS",
+	"name": "PhyscDS",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorageLS",
@@ -21,7 +21,19 @@
 		},
 		"schema": [
 			{
-				"name": "emp_name$$|$month$|incentive$$",
+				"name": "empid",
+				"type": "String"
+			},
+			{
+				"name": "empName",
+				"type": "String"
+			},
+			{
+				"name": "age",
+				"type": "String"
+			},
+			{
+				"name": "Deptid",
 				"type": "String"
 			}
 		]

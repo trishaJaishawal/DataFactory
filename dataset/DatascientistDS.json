@@ -1,5 +1,5 @@
 {
-	"name": "physDS",
+	"name": "DatascientistDS",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorageLS",
@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "Physics.csv",
+				"fileName": "DS.csv",
 				"folderPath": "output",
 				"container": "trisha"
 			},
@@ -21,7 +21,19 @@
 		},
 		"schema": [
 			{
-				"name": "emp_name$$|$month$|incentive$$",
+				"name": "empid",
+				"type": "String"
+			},
+			{
+				"name": "empName",
+				"type": "String"
+			},
+			{
+				"name": "age",
+				"type": "String"
+			},
+			{
+				"name": "Deptid",
 				"type": "String"
 			}
 		]
