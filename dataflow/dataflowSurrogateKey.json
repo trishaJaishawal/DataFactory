@@ -1,0 +1,35 @@
+{
+	"name": "dataflowSurrogateKey",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "empData",
+						"type": "DatasetReference"
+					},
+					"name": "empdata"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "OutputDataSet",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "SurrogateKey1"
+				},
+				{
+					"name": "Select1"
+				}
+			],
+			"script": "source(output(\n\t\tempid as string,\n\t\tempName as string,\n\t\tage as string,\n\t\tDeptid as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> empdata\nempdata keyGenerate(output(keyId as long),\n\tstartAt: 1L) ~> SurrogateKey1\nSurrogateKey1 select(mapColumn(\n\t\tId = keyId,\n\t\tEmpId = empid,\n\t\tEmpName = empName,\n\t\tDeptid,\n\t\tAge = age\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tmapColumn(\n\t\tId,\n\t\tEmpId,\n\t\tEmpName,\n\t\tDeptid,\n\t\tAge\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+		}
+	}
+}
