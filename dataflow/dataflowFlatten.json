@@ -12,13 +12,21 @@
 					"name": "source1"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "outputUnionDS",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
 					"name": "Flatten"
 				}
 			],
-			"script": "source(output(\n\t\tdata as (attributes as (emails as string[], updatedAt as string), id as string, links as (self as string), meta as (dataConnections as (connection as string, id as string, type as string, url as string)[]), type as string),\n\t\tlinks as (first as string, next as string, prev as string),\n\t\tmeta as (count as string)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tdocumentForm: 'singleDocument') ~> source1\nsource1 foldDown(unroll(data.attributes.emails),\n\tmapColumn(\n\t\temails = data.attributes.emails,\n\t\tupdatedAt = data.attributes.updatedAt,\n\t\tid = data.id,\n\t\t{data.links} = data.links,\n\t\t{data.meta},\n\t\t{data.type},\n\t\tlinks = links,\n\t\tmeta = meta\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Flatten"
+			"script": "source(output(\n\t\tdata as (attributes as (emails as string[], updatedAt as string), id as string, links as (self as string), meta as (dataConnections as (connection as string, id as string, type as string, url as string)[]), type as string),\n\t\tlinks as (first as string, next as string, prev as string),\n\t\tmeta as (count as string)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tdocumentForm: 'singleDocument') ~> source1\nsource1 foldDown(unroll(data.attributes.emails),\n\tmapColumn(\n\t\temails = data.attributes.emails,\n\t\tupdatedAt = data.attributes.updatedAt,\n\t\tid = data.id,\n\t\t{data.links} = data.links,\n\t\t{data.meta} = data.meta,\n\t\tlinks = links,\n\t\tmeta = meta\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Flatten\nFlatten sink(input(\n\t\tempid as string,\n\t\tempName as string,\n\t\tage as string,\n\t\tDeptid as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['jsonoutputflat.csv'],\n\tmapColumn(\n\t\tempid = emails,\n\t\tempid = updatedAt,\n\t\tage = id\n\t),\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
 		}
 	}
 }
