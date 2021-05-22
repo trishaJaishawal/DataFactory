@@ -1,0 +1,104 @@
+{
+	"name": "JSONDS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorageLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "test.json",
+				"folderPath": "input",
+				"container": "trisha"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"data": {
+					"type": "object",
+					"properties": {
+						"attributes": {
+							"type": "object",
+							"properties": {
+								"emails": {
+									"type": "array",
+									"items": {
+										"type": "string"
+									}
+								},
+								"updatedAt": {
+									"type": "string"
+								}
+							}
+						},
+						"id": {
+							"type": "string"
+						},
+						"links": {
+							"type": "object",
+							"properties": {
+								"self": {
+									"type": "string"
+								}
+							}
+						},
+						"meta": {
+							"type": "object",
+							"properties": {
+								"dataConnections": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"connection": {
+												"type": "string"
+											},
+											"id": {
+												"type": "string"
+											},
+											"type": {
+												"type": "string"
+											},
+											"url": {
+												"type": "string"
+											}
+										}
+									}
+								}
+							}
+						},
+						"type": {
+							"type": "string"
+						}
+					}
+				},
+				"links": {
+					"type": "object",
+					"properties": {
+						"first": {
+							"type": "string"
+						},
+						"next": {
+							"type": "string"
+						},
+						"prev": {
+							"type": "string"
+						}
+					}
+				},
+				"meta": {
+					"type": "object",
+					"properties": {
+						"count": {
+							"type": "integer"
+						}
+					}
+				}
+			}
+		}
+	}
+}
