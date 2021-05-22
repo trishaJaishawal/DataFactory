@@ -26,7 +26,7 @@
 					"name": "Window1"
 				}
 			],
-			"script": "source(output(\n\t\tempid as string,\n\t\tempName as string,\n\t\tage as string,\n\t\tDeptid as string,\n\t\tsalary as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> empdata\nempdata window(over(Deptid),\n\tdesc(salary, true),\n\trownum = rowNumber()) ~> Window1\nWindow1 sink(input(\n\t\tempid as string,\n\t\tempName as string,\n\t\tage as string,\n\t\tDeptid as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['windowSalary.csv'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+			"script": "source(output(\n\t\tempid as string,\n\t\tempName as string,\n\t\tage as integer,\n\t\tDeptid as string,\n\t\tsalary as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> empdata\nempdata window(over(Deptid),\n\tdesc(salary, true),\n\trownum = rowNumber()) ~> Window1\nWindow1 sink(input(\n\t\tempid as string,\n\t\tempName as string,\n\t\tage as string,\n\t\tDeptid as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['windowSalary.csv'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
 		}
 	}
 }

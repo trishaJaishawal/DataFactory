@@ -1,0 +1,32 @@
+{
+	"name": "dataflowAlter",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "employeesDS",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTableEmpDS",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "AlterRow1"
+				}
+			],
+			"script": "source(output(\n\t\tempid as integer,\n\t\tempName as string,\n\t\tgender as string,\n\t\tsalary as integer,\n\t\tDeptid as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource1 alterRow(deleteIf(Deptid=='100')) ~> AlterRow1\nAlterRow1 sink(input(\n\t\tid as integer,\n\t\tname as string,\n\t\tgender as string,\n\t\tsalary as integer,\n\t\tdept as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tid = empid,\n\t\tname = empName,\n\t\tgender,\n\t\tsalary,\n\t\tdept = Deptid\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+		}
+	}
+}
