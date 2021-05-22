@@ -17,7 +17,13 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "dataflowFilter",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"parameters": {
+							"deptId": {
+								"value": "'@{pipeline().parameters.deptId}'",
+								"type": "Expression"
+							}
+						}
 					},
 					"compute": {
 						"coreCount": 8,
@@ -27,6 +33,11 @@
 				}
 			}
 		],
+		"parameters": {
+			"deptId": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
